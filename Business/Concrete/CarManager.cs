@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    public class CarManager : ICarService
+    public class CarManager : ICarService, IBrandService, IColorService
     {
         ICarDal _carDal;
 
@@ -16,41 +16,18 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        private bool isCarExist(Car car)
-        {
-            var carCheck = _carDal.GetById(car.Id);
-            if (carCheck!=null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        
         public void Add(Car car)
         {
-            if(!isCarExist(car))
+            if (car.CarName.Length >= 2 && car.DailyPrice > 0)
             {
-                Console.WriteLine("Araba başarıyla eklendi");
                 _carDal.Add(car);
-            }
-            else
-            {
-                Console.WriteLine("Bu ID de araç var!");
             }
         }
 
         public void Delete(Car car)
         {
-            if (!isCarExist(car)) 
-            {
-                _carDal.Delete(car);
-            }
-            else
-            {
-                Console.WriteLine("Silinmedi! Belirtilen değerede araç bulunmamaktadır");
-            }
+            
         }
 
         public List<Car> GetAll()
@@ -62,17 +39,20 @@ namespace Business.Concrete
 
         public void Update(Car car)
         {
-            if (isCarExist(car))
-            {
-                _carDal.Update(car);
-            }
-            else
-            {
-                Console.WriteLine("Güncellenecek araç yok!");
-            }
+            
         }
 
         public Car GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Car> GetCarByBrandId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Car> GetCarByColorId(int id)
         {
             throw new NotImplementedException();
         }
